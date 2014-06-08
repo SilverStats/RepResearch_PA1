@@ -25,6 +25,11 @@ We can also easily find the mean and median number of steps, again with the rows
 
 
 ```r
+mean(rowsum(activity$steps, activity$date, na.rm = TRUE))
+median(rowsum(activity$steps, activity$date, na.rm = TRUE))
+```
+
+```r
 mean = 9354.23
 median = 10395
 ```
@@ -38,7 +43,7 @@ plot(levels(factor(activity$interval)), steps, type = "l", xlab = "Time",
      main = "Average steps per day, broken by interval")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 The highest average steps per day occurs at 8:35 AM (roughly 206.17 steps per day).
 
@@ -70,14 +75,18 @@ hist(rowsum(newActivity$newSteps, newActivity$date), xlab = "Number of Steps",
      main = "Frequency of Steps per Day", breaks = 10)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
 Adding the missing values in as means tightens up the data, narrowing the histogram. The measures of center increase as well.
 
 
 ```r
-mean = 10766.19
-median = 10766.19
+mean(rowsum(newActivity$newSteps, newActivity$date))
+median(rowsum(newActivity$newSteps, newActivity$date))
+```
+
+```r
+mean = median = 10766.19
 ```
 
 ## Weekdays versus Weekends
@@ -107,6 +116,6 @@ plot(levels(factor(activity$interval)), dayWeekSteps[,2], type = "l",
      xlab = "Interval", ylab = "Steps", main = "Steps on Weekends")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
 
 It's clear that the steps are more variable on weekends, probably because there is no prolonged sitting at a desk, and also don't ramp up until later in the day (also to be expected).

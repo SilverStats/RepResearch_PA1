@@ -19,6 +19,10 @@ hist(rowsum(activity$steps, activity$date, na.rm = TRUE),
 
 We can also easily find the mean and median number of steps, again with the rowsum function:
 
+```{r, results = "hide"}
+mean(rowsum(activity$steps, activity$date, na.rm = TRUE))
+median(rowsum(activity$steps, activity$date, na.rm = TRUE))
+```
 ```{r}
 mean = 9354.23
 median = 10395
@@ -62,9 +66,12 @@ hist(rowsum(newActivity$newSteps, newActivity$date), xlab = "Number of Steps",
 
 Adding the missing values in as means tightens up the data, narrowing the histogram. The measures of center increase as well.
 
+```{r, results = "hide"}
+mean(rowsum(newActivity$newSteps, newActivity$date))
+median(rowsum(newActivity$newSteps, newActivity$date))
+```
 ```{r}
-mean = 10766.19
-median = 10766.19
+mean = median = 10766.19
 ```
 
 ## Weekdays versus Weekends
