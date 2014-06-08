@@ -45,7 +45,7 @@ plot(levels(factor(activity$interval)), steps, type = "l", xlab = "Time",
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
-The highest average steps per day occurs at 8:35 AM (roughly 206.17 steps per day).
+The highest average steps per day occurs at 8:35 AM (roughly 206.17 steps per day). This is easily found with ``max(steps)`` and a reverse lookup.
 
 ## Missing Values
 
