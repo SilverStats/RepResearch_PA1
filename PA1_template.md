@@ -15,7 +15,8 @@ We create a histogram showing the frequency of total steps per day.
 
 
 ```r
-hist(rowsum(activity$steps, activity$date, na.rm = TRUE), main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
+hist(rowsum(activity$steps, activity$date, na.rm = TRUE),
+     main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
 ```
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
@@ -33,7 +34,8 @@ Next, calculate the average steps on an by-interval basis, and plot the result.
 
 ```r
 steps <- tapply(activity$steps, activity$interval, FUN = mean, na.rm = TRUE)
-plot(levels(factor(activity$interval)), steps, type = "l", main = "Average steps per day, broken by interval", xlab = "Time")
+plot(levels(factor(activity$interval)), steps, type = "l", xlab = "Time",
+     main = "Average steps per day, broken by interval")
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
@@ -64,7 +66,8 @@ The histogram looks a bit different as well:
 
 
 ```r
-hist(rowsum(newActivity$newSteps, newActivity$date), main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
+hist(rowsum(newActivity$newSteps, newActivity$date), xlab = "Number of Steps",
+     main = "Frequency of Steps per Day", breaks = 10)
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
@@ -85,10 +88,12 @@ We need to create a factor variable based on the day of the week.
 ```r
 dayWeek <- weekdays(as.Date(newActivity$date))
 dayWeek <- replace(dayWeek, dayWeek %in% c("Saturday", "Sunday"), "weekend")
-dayWeek <- replace(dayWeek, dayWeek %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "weekday")
+dayWeek <- replace(dayWeek, dayWeek %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
+                   "weekday")
 dayWeek <- factor(dayWeek)
 newActivity$dayWeek <- dayWeek
-dayWeekSteps <- tapply(newActivity$newSteps, INDEX = list(newActivity$interval, newActivity$dayWeek), FUN = mean, na.rm = TRUE)
+dayWeekSteps <- tapply(newActivity$newSteps, INDEX = list(newActivity$interval,
+                       newActivity$dayWeek), FUN = mean)
 ```
 
 Next we create plots to compare the two.
@@ -96,8 +101,10 @@ Next we create plots to compare the two.
 
 ```r
 par(mar = c(3, 4, 1.2, 1), mfrow = c(2, 1))
-plot(levels(factor(activity$interval)), dayWeekSteps[,1], type = "l", main =     "Steps on Weekdays", xlab = "Interval", ylab = "Steps")
- plot(levels(factor(activity$interval)), dayWeekSteps[,2], type = "l", xlab = "Interval", ylab = "Steps", main = "Steps on Weekends")
+plot(levels(factor(activity$interval)), dayWeekSteps[,1], type = "l",
+     main = "Steps on Weekdays", xlab = "Interval", ylab = "Steps")
+plot(levels(factor(activity$interval)), dayWeekSteps[,2], type = "l",
+     xlab = "Interval", ylab = "Steps", main = "Steps on Weekends")
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 

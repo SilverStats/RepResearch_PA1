@@ -13,7 +13,8 @@ activity <- read.csv("activity.csv")
 We create a histogram showing the frequency of total steps per day.
 
 ```{r, fig.width = 6, fig.height = 5}
-hist(rowsum(activity$steps, activity$date, na.rm = TRUE), main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
+hist(rowsum(activity$steps, activity$date, na.rm = TRUE),
+     main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
 ```
 
 We can also easily find the mean and median number of steps, again with the rowsum function:
@@ -27,7 +28,8 @@ Next, calculate the average steps on an by-interval basis, and plot the result.
 
 ```{r, fig.width = 6, fig.height = 5}
 steps <- tapply(activity$steps, activity$interval, FUN = mean, na.rm = TRUE)
-plot(levels(factor(activity$interval)), steps, type = "l", main = "Average steps per day, broken by interval", xlab = "Time")
+plot(levels(factor(activity$interval)), steps, type = "l", xlab = "Time",
+     main = "Average steps per day, broken by interval")
 ```
 
 The highest average steps per day occurs at 8:35 AM (roughly 206.17 steps per day).
@@ -54,7 +56,8 @@ The resulting data frame, newActivity, contains no missing values.
 The histogram looks a bit different as well:
 
 ```{r, fig.width = 5, fig.height = 5}
-hist(rowsum(newActivity$newSteps, newActivity$date), main = "Frequency of Steps per Day", xlab = "Number of Steps", breaks = 10)
+hist(rowsum(newActivity$newSteps, newActivity$date), xlab = "Number of Steps",
+     main = "Frequency of Steps per Day", breaks = 10)
 ```
 
 Adding the missing values in as means tightens up the data, narrowing the histogram. The measures of center increase as well.
@@ -71,18 +74,22 @@ We need to create a factor variable based on the day of the week.
 ```{r}
 dayWeek <- weekdays(as.Date(newActivity$date))
 dayWeek <- replace(dayWeek, dayWeek %in% c("Saturday", "Sunday"), "weekend")
-dayWeek <- replace(dayWeek, dayWeek %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "weekday")
+dayWeek <- replace(dayWeek, dayWeek %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
+                   "weekday")
 dayWeek <- factor(dayWeek)
 newActivity$dayWeek <- dayWeek
-dayWeekSteps <- tapply(newActivity$newSteps, INDEX = list(newActivity$interval, newActivity$dayWeek), FUN = mean, na.rm = TRUE)
+dayWeekSteps <- tapply(newActivity$newSteps, INDEX = list(newActivity$interval,
+                       newActivity$dayWeek), FUN = mean)
 ```
 
 Next we create plots to compare the two.
 
 ```{r}
 par(mar = c(3, 4, 1.2, 1), mfrow = c(2, 1))
-plot(levels(factor(activity$interval)), dayWeekSteps[,1], type = "l", main =     "Steps on Weekdays", xlab = "Interval", ylab = "Steps")
- plot(levels(factor(activity$interval)), dayWeekSteps[,2], type = "l", xlab = "Interval", ylab = "Steps", main = "Steps on Weekends")
+plot(levels(factor(activity$interval)), dayWeekSteps[,1], type = "l",
+     main = "Steps on Weekdays", xlab = "Interval", ylab = "Steps")
+plot(levels(factor(activity$interval)), dayWeekSteps[,2], type = "l",
+     xlab = "Interval", ylab = "Steps", main = "Steps on Weekends")
 ```
 
 It's clear that the steps are more variable on weekends, probably because there is no prolonged sitting at a desk, and also don't ramp up until later in the day (also to be expected).
